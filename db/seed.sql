@@ -1,17 +1,17 @@
 -- usuarios
-INSERT INTO usuario (rol, email, password)
-VALUES 
-('admin', 'admin@example.com', 'admin'),
-('paciente', 'paciente@test.com', 'test'),
-('paciente', 'maria.lopez@example.com', 'test'),
-('paciente', 'carlos.sanchez@example.com', 'test'),
-('paciente', 'ana.torres@example.com', 'test'),
-('paciente', 'luca.morales@example.com', 'test'),
-('psicologo', 'psico@test.com', 'test'),
-('psicologo', 'miguel.garcia@example.com', 'test'),
-('psicologo', 'sofia.ruiz@example.com', 'test'),
-('psicologo', 'pedro.castillo@example.com', 'test'),
-('psicologo', 'valeria.ortiz@example.com', 'test');
+-- INSERT INTO usuario (rol, email, password)
+-- VALUES 
+-- ('admin', 'admin@test.com', 'admin'),
+-- ('paciente', 'paciente@test.com', 'test'),
+-- ('paciente', 'maria.lopez@test.com', 'test'),
+-- ('paciente', 'carlos.sanchez@test.com', 'test'),
+-- ('paciente', 'ana.torres@test.com', 'test'),
+-- ('paciente', 'luca.morales@test.com', 'test'),
+-- ('psicologo', 'psico@test.com', 'test'),
+-- ('psicologo', 'miguel.garcia@test.com', 'test'),
+-- ('psicologo', 'sofia.ruiz@test.com', 'test'),
+-- ('psicologo', 'pedro.castillo@test.com', 'test'),
+-- ('psicologo', 'valeria.ortiz@test.com', 'test');
 
 -- admin
 INSERT INTO admin (id_usuario) VALUES (1);
