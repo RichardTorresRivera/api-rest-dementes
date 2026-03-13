@@ -1,20 +1,38 @@
--- paciente
-INSERT INTO paciente (nombre, apellido_paterno, apellido_materno, dni, genero)
+-- usuarios
+INSERT INTO usuario (rol, email, password)
 VALUES 
-('Juan', 'Pérez', 'Gómez', '12345678', 'masculino'),
-('María', 'Lopez', 'Ramirez', '23456789', 'femenino'),
-('Carlos', 'Sánchez', 'Díaz', '34567890', 'masculino'),
-('Ana', 'Torres', 'Martínez', '45678901', 'femenino'),
-('Luca', 'Morales', 'Vega', '56789012', 'no binario');
+('admin', 'admin@example.com', 'admin'),
+('paciente', 'paciente@test.com', 'test'),
+('paciente', 'maria.lopez@example.com', 'test'),
+('paciente', 'carlos.sanchez@example.com', 'test'),
+('paciente', 'ana.torres@example.com', 'test'),
+('paciente', 'luca.morales@example.com', 'test'),
+('psicologo', 'psico@test.com', 'test'),
+('psicologo', 'miguel.garcia@example.com', 'test'),
+('psicologo', 'sofia.ruiz@example.com', 'test'),
+('psicologo', 'pedro.castillo@example.com', 'test'),
+('psicologo', 'valeria.ortiz@example.com', 'test');
+
+-- admin
+INSERT INTO admin (id_usuario) VALUES (1);
+
+-- paciente
+INSERT INTO paciente (id_usuario, nombre, apellido_paterno, apellido_materno, dni, genero)
+VALUES 
+(2, 'Juan', 'Pérez', 'Gómez', '12345678', 'masculino'),
+(3, 'María', 'Lopez', 'Ramirez', '23456789', 'femenino'),
+(4, 'Carlos', 'Sánchez', 'Díaz', '34567890', 'masculino'),
+(5, 'Ana', 'Torres', 'Martínez', '45678901', 'femenino'),
+(6, 'Luca', 'Morales', 'Vega', '56789012', 'no binario');
 
 -- psicologo
-INSERT INTO psicologo (nombre, apellido_paterno, apellido_materno, dni)
+INSERT INTO psicologo (id_usuario, nombre, apellido_paterno, apellido_materno, dni)
 VALUES 
-('Laura', 'Fernández', 'Rivas', '67890123'),
-('Miguel', 'García', 'Lozano', '78901234'),
-('Sofía', 'Ruiz', 'Delgado', '89012345'),
-('Pedro', 'Castillo', 'Núñez', '90123456'),
-('Valeria', 'Ortiz', 'Mendoza', '01234567');
+(7, 'Laura', 'Fernández', 'Rivas', '67890123'),
+(8, 'Miguel', 'García', 'Lozano', '78901234'),
+(9, 'Sofía', 'Ruiz', 'Delgado', '89012345'),
+(10, 'Pedro', 'Castillo', 'Núñez', '90123456'),
+(11, 'Valeria', 'Ortiz', 'Mendoza', '01234567');
 
 -- especialidades
 INSERT INTO especialidad (nombre)

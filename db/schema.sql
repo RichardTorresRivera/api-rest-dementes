@@ -1,6 +1,4 @@
 -- Base de datos
-CREATE DATABASE dementes ENCODING 'UTF8' LC_COLLATE='es_PE.UTF-8' LC_CTYPE='es_PE.UTF-8' TEMPLATE=template0;
-
 -- Géneros
 CREATE TYPE genero_enum AS ENUM ('masculino', 'femenino', 'no binario');
 
@@ -10,20 +8,39 @@ CREATE TYPE estado_cita AS ENUM ('pendiente', 'realizado', 'cancelado', 'ausente
 -- Días de la semana
 CREATE TYPE dia_enum AS ENUM ('lun', 'mar', 'mie', 'jue', 'vie', 'sab', 'dom');
 
+-- Roles de usuario
+CREATE TYPE rol_enum AS ENUM ('admin', 'psicologo', 'paciente');
+
+-- Tabla usuario
+CREATE TABLE usuario (
+    id_usuario SERIAL PRIMARY KEY,
+    rol rol_enum NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Tabla admin
+CREATE TABLE admin (
+    id_admin SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL REFERENCES usuario(id_usuario)
+);
+
 -- Tabla paciente
 CREATE TABLE paciente (
     id_paciente SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL REFERENCES usuario(id_usuario),
     nombre VARCHAR(100) NOT NULL,
     apellido_paterno VARCHAR(100) NOT NULL,
     apellido_materno VARCHAR(100) NOT NULL,
     dni CHAR(8) UNIQUE NOT NULL,
-    foto VARCHAR(255) DEFAULT 'https://i.ibb.co/BVgw0Wk1/paciente.png',
+    foto VARCHAR(255) DEFAULT 'https://i.ibb.co/mC7mq7vh/paciente.png',
     genero genero_enum NOT NULL
 );
 
 -- Tabla psicologo
 CREATE TABLE psicologo (
     id_psicologo SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL REFERENCES usuario(id_usuario),
     nombre VARCHAR(100) NOT NULL,
     apellido_paterno VARCHAR(100) NOT NULL,
     apellido_materno VARCHAR(100) NOT NULL,
