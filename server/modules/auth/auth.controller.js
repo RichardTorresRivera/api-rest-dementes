@@ -43,25 +43,3 @@ export const logoutRequest = (req, res) => {
   res.clearCookie("token");
   res.status(200).json({ message: "Logout successful" });
 };
-
-export const createUserRequest = async (req, res, next) => {
-  try {
-    const { rol, email, password } = req.body;
-
-    const existingUser = await getUserByEmail(email);
-    if (existingUser) {
-      return res.status(400).json({ message: "Email already in use" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await createUser({ rol, email, password: hashedPassword });
-
-    res.status(201).json({
-      message: "User created successfully",
-      user,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
