@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { loginValidator } from "./auth.validator.js";
 import {
   createUserRequest,
   loginRequest,
@@ -7,7 +8,7 @@ import {
 
 const router = Router();
 
-router.post("/login", loginRequest);
+router.post("/login", loginValidator, loginRequest);
 router.post("/logout", logoutRequest);
 router.post("/register", createUserRequest);
 
