@@ -67,7 +67,7 @@ export const getPsicologos = async ({
 
   if (nombre) {
     filters.push(
-      `LOWER(CONCAT(p.nombre, ' ', p.apellido_paterno, ' ', p.apellido_materno)) LIKE '%' || $${i++} || '%'`
+      `LOWER(CONCAT(p.nombre, ' ', p.apellido_paterno, ' ', p.apellido_materno)) LIKE '%' || $${i++} || '%'`,
     );
     values.push(nombre);
   }
@@ -143,7 +143,7 @@ export const getPsicologo = async ({ id_psicologo }) => {
 
     FROM psicologo p
     WHERE p.id_psicologo = $1;`,
-    [id_psicologo]
+    [id_psicologo],
   );
   return psicologo;
 };
@@ -160,7 +160,7 @@ export const getPerfilPsicologos = async ({
 
   if (nombre) {
     filters.push(
-      `LOWER(CONCAT(p.nombre, ' ', p.apellido_paterno, ' ', p.apellido_materno)) LIKE '%' || $${i++} || '%'`
+      `LOWER(CONCAT(p.nombre, ' ', p.apellido_paterno, ' ', p.apellido_materno)) LIKE '%' || $${i++} || '%'`,
     );
     values.push(nombre);
   }
@@ -193,7 +193,38 @@ export const getPerfilPsicologo = async ({ id_psicologo }) => {
       ${sqlSelectBasicoPsicologo}
     FROM psicologo p
     WHERE p.id_psicologo = $1;`,
-    [id_psicologo]
+    [id_psicologo],
   );
+  return psicologo;
+};
+
+export const getPsicologoByDNI = async (dni) => {
+  const psicologo = await db.oneOrNone(
+    `SELECT id_usuario, id_psicologo
+    FROM psicologo
+    WHERE dni = $1;`,
+    [dni],
+  );
+  return psicologo;
+};
+
+export const createPsicologo = async ({
+  id_usuario,
+  nombre,
+  apellido_paterno,
+  apellido_materno,
+  dni,
+}) => {
+  const query = `
+    INSERT INTO psicologo (id_usuario, nombre, apellido_paterno, apellido_materno, dni)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;`;
+  const psicologo = await db.one(query, [
+    id_usuario,
+    nombre,
+    apellido_paterno,
+    apellido_materno,
+    dni,
+  ]);
   return psicologo;
 };
