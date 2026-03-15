@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon -L --ignore node_modules/ index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:setup": "node ./db/setup.js"
   },

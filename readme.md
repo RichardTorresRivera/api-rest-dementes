@@ -1,48 +1,84 @@
-# API - Dementes
+# API Rest Dementes 🧠
 
-API REST básica para la gestión de citas de salud mental
+API REST para la gestión de citas de salud mental construida con Node.js, Express y PostgreSQL.
 
-## Entidades
+## 🚀 Requisitos Previos
 
-- **Paciente:** Persona que solicita una cita con un psicólogo.
+- Node.js v20 o superior y PostgreSQL v17 (instalación tradicional)
 
-- **Psicólogo:** Profesional de la salud encargado de brindar atención psicológica.
+- Docker y Docker Compose (instalacion con Docker)
 
-- **Especialidad:** Área de especialización de un psicólogo.
+## 🛠️ Opción 1: Instalación Tradicional
 
-- **Cita:** Registro de la programación de una consulta entre un paciente y un psicólogo.
+1. **Clonar y preparar dependencias**
 
-- **Horario:** Disponibilidad horaria de un psicólogo.
+```bash
+   git clone https://github.com/RichardTorresRivera/api-rest-dementes.git
+   cd api-rest-dementes
+   npm install
+```
 
-## Endpoints - GET
+2. **Configurar variables de entorno**
 
-### Citas
+   Crea un archivo .env en la raíz del proyecto basándote en el archivo de ejemplo:
 
-- `/citas`: Obtiene el listado de todas las citas.
-- `/citas/:id`: Obtiene la información de una cita específica.
-- `/citas/psicologo/:id`: Obtiene las citas asociadas a un psicólogo.
-- `/citas/paciente/:id`: Obtiene las citas asociadas a un paciente.
+```bash
+cp .env.example .env
+Edita el .env con tus credenciales de base de datos local:
+```
 
-### Especialidades
+3. **Inicializar Base de Datos y Seed**
 
-- `/especialidades`: Lista todas las especialidades disponibles.
-- `/especialidades/:id`: Obtiene el nombre y descripción de una especialidad en particular.
-- `especialidades/psicologo/:id`: Obtiene las especialidades asociadas a un psicólogo específico.
+Este comando ejecutará el esquema y cargará los datos de prueba (usuarios con contraseñas encriptadas):
 
-### Horario
+```bash
+npm run db:setup
+```
 
-- `/horarios`: Lista el catálogo estático de horarios disponibles.
-- `/horarios/:id`: Obtiene la información de un horario específico.
-- `/horarios/psicologo/:id`: Obtiene los horarios de disponibilidad de un psicólogo.
+4. **Iniciar el servidor**
 
-### Paciente
+```bash
+npm run dev
+```
 
-- `/pacientes`: Lista a todos los pacientes.
-- `/pacientes/:id`: Obtiene la información de un paciente en particular.
+## 🐳 Opción 2: Instalación con Docker
 
-### Psicologo
+Esta opción levanta automáticamente la base de datos PostgreSQL 17 y la API en contenedores aislados.
 
-- `/psicologos`: Lista todos los psicólogos con su información completa.
-- `/psicologos/:id`: Obtiene la información detallada de un psicólogo, incluyendo especialidades y horarios.
-- `/psicologos/perfiles`: Obtiene información básica de todos los psicólogos.
-- `/psicologos/perfiles/:id`: Obtiene información básica de un psicólogo en particular.
+1. **Levantar contenedores**
+
+```bash
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+2. **Ejecutar Seed de datos**
+
+Una vez que los contenedores estén corriendo, ejecuta el siguiente comando para poblar la base de datos (asegúrate de que el nombre del contenedor de la api sea el correcto):
+
+```bash
+docker exec -it dementes_api_rest_dev-api-rest-1 npm run db:setup
+```
+
+3. **Ver logs**
+
+```Bash
+docker logs -f dementes_api_rest_dev-api-rest-1
+```
+
+## 📂 Estructura del Proyecto
+
+- /server/modules: Lógica dividida por dominios (Auth, Paciente, Psicólogo, Citas, etc.).
+
+- /server/middlewares: Manejo de errores, autenticación y validaciones.
+
+- /db: Scripts de inicialización SQL (schema.sql) y semillas de datos (seed.js).
+
+- /server/config: Configuración de entorno y conexión a Postgres.
+
+🔑 Cuentas de Prueba (Seed)
+
+| Rol       | Email             | Password |
+| --------- | ----------------- | -------- |
+| Admin     | admin@test.com    | test     |
+| Paciente  | paciente@test.com | test     |
+| Psicólogo | psico@test.com    | test     |

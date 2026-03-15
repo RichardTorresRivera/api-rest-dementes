@@ -1,0 +1,33 @@
+name: dementes_api_rest_dev
+services:
+  api-rest:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    image: dementes_api_rest_dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - DB_URL=postgres://postgres:password@postgres:5432/dementes_db
+      - DB_BASE_URL=postgres://postgres:password@postgres:5432
+      - DB_NAME=dementes_db
+      - JWT_SECRET=token_secret
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dementes_db
+    volumes:
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
